@@ -52,7 +52,7 @@ function ConvertTo-RaptApiUri {
             if ($null -NE $value) {
                 $encodedKey = [System.Web.HttpUtility]::UrlEncode($key)
                 $encodedValue = [System.Web.HttpUtility]::UrlEncode($value.ToString())
-                $queryString + = "$encodedKey = $encodedValue"
+                $queryString += "$encodedKey=$encodedValue"
             }
         }
         if ($queryString.Count -GT 0) {
