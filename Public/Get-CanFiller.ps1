@@ -1,109 +1,73 @@
 function Get-CanFiller {
-
     <#
         .NAME
         Get-CanFiller
-
         .SYNOPSIS
         Get information about your CanFiller(s)
-
         .PARAMETER Id
         Id of your CanFiller
-
         .OUTPUTS
         System.Object
-
         .EXAMPLE
         Get-CanFiller
-
         .EXAMPLE
         Get-CanFiller -Id $id
-
         .RELATED LINKS
         https://api.rapt.io/index.html
-
     #>
-
     [CmdletBinding()][OutputType('System.Management.Automation.PSObject')]
-
     Param (
-
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]$Id
-
     )
-
     Begin {
-
         # Check if connection to RAPT portal exists
-        If(-not $raptObj){
+        If (-not $raptObj) {
             throw "Please connect to the RAPT.io portal using the Connect-Rapt cmdlet"
         }
-
-        If ($PSBoundParameters.ContainsKey('Id')){
+        If ($PSBoundParameters.ContainsKey('Id')) {
             $uri = "$($raptObj.baseUri)/api/CanFillers/GetCanFiller"
-        }
-        else {
+        } else {
             $uri = "$($raptObj.baseUri)/api/CanFillers/GetCanFillers"
         }
-
         # Check time left on token; if less than 2 minutes, refresh it.
         $timeLeft = New-TimeSpan $(Get-Date) $raptObj.expireTime
-
-        If($timeLeft.Minutes -lt 2 -and $raptObj){
+        If ($timeLeft.Minutes -lt 2 -and $raptObj) {
             Connect-Rapt -username $raptObj.username -apiKey $raptObj.apiKey
         }
-
         # If no token passed, use the scoped variable
-        If(!$token){
+        If (!$token) {
             $token = $raptObj.accessToken
         }
-
         $header = @{
-            'Accept' = 'application/json'
+            'Accept'          = 'application/json'
             'Accept-Encoding' = 'gzip, deflate, br'
-            'Authorization' = "Bearer ${token}"
+            'Authorization'   = "Bearer ${token}"
         }
-
-        If ($PSBoundParameters.ContainsKey('Id')){
+        If ($PSBoundParameters.ContainsKey('Id')) {
             $body = @{
                 canFillerId = $Id
             }
         }
-
     }
-
     Process {
-
         try {
-
             $params = @{
-                    uri     = $uri
-                    headers = $header
-                    method  = 'GET'
+                uri     = $uri
+                headers = $header
+                method  = 'GET'
             }
-
-            If ($PSBoundParameters.ContainsKey('Id')){
+            If ($PSBoundParameters.ContainsKey('Id')) {
                 $params.body = $body
             }
-
             $response = Invoke-RestMethod @params
-
         }
-
-        catch [Exception]{
-
+        catch [Exception] {
             throw $_.Exception
-
         }
-
         return $response
-
     }
-
     End {
-
     }
-
 }

@@ -58,6 +58,7 @@ Temperature target for your BrewZilla
 ## Inputs
 
 ### System.String
+
 ### System.Double
 
 You can pipe string and double objects to this function.

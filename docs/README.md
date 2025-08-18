@@ -19,10 +19,12 @@ Connect-Rapt -Username "your-email@example.com" -ApiKey "your-api-key"
 ### BrewZilla Functions
 
 #### Information & Telemetry
+
 - [Get-BrewZilla](Get-BrewZilla.md) - Get BrewZilla device information
 - [Get-BrewZillaTelemetry](Get-BrewZillaTelemetry.md) - Get BrewZilla telemetry data
 
 #### Control Functions
+
 - [Set-BrewZillaTemp](Set-BrewZillaTemp.md) - Set target temperature
 - [Set-BrewZillaHeatingEnabled](Set-BrewZillaHeatingEnabled.md) - Enable/disable heating
 - [Set-BrewZillaHeatingUtilisation](Set-BrewZillaHeatingUtilisation.md) - Set heating utilisation
@@ -76,17 +78,21 @@ Connect-Rapt -Username "your-email@example.com" -ApiKey "your-api-key"
 Most functions that work with devices support the following parameter patterns:
 
 ### Device Identification
+
 - **Id** - Specify device by unique ID
 - **Name** - Specify device by name (automatically resolved to ID)
 
 ### Date Ranges
+
 For telemetry functions:
+
 - **StartDate** - Start date for data retrieval (ISO 8601 format recommended)
 - **EndDate** - End date for data retrieval (ISO 8601 format recommended)
 
 ## Authentication
 
 The module handles authentication automatically:
+
 - Tokens are stored in a script-scoped variable
 - Tokens are automatically refreshed when they expire within 2 minutes
 - All functions check for valid authentication before making API calls
@@ -94,6 +100,7 @@ The module handles authentication automatically:
 ## Error Handling
 
 All functions include comprehensive error handling:
+
 - Connection validation before API calls
 - Automatic token refresh
 - Detailed exception information
