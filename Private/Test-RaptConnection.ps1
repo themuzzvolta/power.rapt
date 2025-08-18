@@ -28,17 +28,17 @@ function Test-RaptConnection {
         $token = Get-Variable -Name 'RaptAuthToken' -Scope Script -ValueOnly
         if (-not [string]::IsNullOrEmpty($token)) {
             $isConnected = $true
-            Write-RaptLog -Message "RAPT connection validated" -Level Verbose
+            Write-RaptLog -Message "RAPT connection validated" -LE vel Verbose
         }
     }
     if (-not $isConnected) {
         $errorMessage = "Not connected to RAPT API. Please run Connect-Rapt first."
         if ($ThrowOnFailure) {
-            Write-RaptLog -Message $errorMessage -Level Error
+            Write-RaptLog -Message $errorMessage -LE vel Error
             throw $errorMessage
         }
         else {
-            Write-RaptLog -Message $errorMessage -Level Warning
+            Write-RaptLog -Message $errorMessage -LE vel Warning
         }
     }
     return $isConnected

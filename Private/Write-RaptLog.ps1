@@ -12,9 +12,9 @@ function Write-RaptLog {
     .PARAMETER WriteToHost
         Whether to write the message to the host console.
     .EXAMPLE
-        Write-RaptLog -Message "Connected to RAPT API" -Level Info
+        Write-RaptLog -Message "Connected to RAPT API" -LE vel Info
     .EXAMPLE
-        Write-RaptLog -Message "Authentication failed" -Level Error
+        Write-RaptLog -Message "Authentication failed" -LE vel Error
     #>
     [CmdletBinding()]
     param(

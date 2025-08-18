@@ -44,7 +44,7 @@ function Get-BrewZillaTelemetry {
         $uri = "$($raptObj.baseUri)/api/BrewZillas/GetTelemetry"
         # Check time left on token; if less than 2 minutes, refresh it.
         $timeLeft = New-TimeSpan $(Get-Date) $raptObj.expireTime
-        If ($timeLeft.Minutes -lt 2 -and $raptObj) {
+        If ($timeLeft.Minutes -LT 2 -and $raptObj) {
             Connect-Rapt -username $raptObj.username -apiKey $raptObj.apiKey
         }
         # If no token passed, use the scoped variable
@@ -52,26 +52,26 @@ function Get-BrewZillaTelemetry {
             $token = $raptObj.accessToken
         }
         $header = @{
-            'Accept'          = 'application/json'
+            'Accept' = 'application/json'
             'Accept-Encoding' = 'gzip, compress, br'
-            'Authorization'   = "Bearer ${token}"
+            'Authorization' = "Bearer ${token}"
         }
         If ($PSBoundParameters.ContainsKey('Name')) {
-            $Id = (Get-BrewZilla | Where-Object { $_.Name -eq $Name }).Id
+            $Id = (Get-BrewZilla | Where-Object { $_.Name -EQ $Name }).Id
         }
         $body = @{
             BrewZillaId = $Id
-            startDate   = $StartDate
-            endDate     = $EndDate
+            startDate = $StartDate
+            endDate = $EndDate
         }
     }
     Process {
         try {
             $params = @{
-                uri     = $uri
+                uri = $uri
                 headers = $header
-                body    = $body
-                method  = 'GET'
+                body = $body
+                method = 'GET'
             }
             $response = Invoke-RestMethod @params
         }

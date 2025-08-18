@@ -1,4 +1,4 @@
-﻿#requires -Version 5.1
+#requires -Version 5.1
 <#
 .SYNOPSIS
     Build script for the power.rapt PowerShell module.
@@ -39,17 +39,17 @@ param(
 )
 # Set build variables
 $BuildVariables = @{
-    ModuleName     = $ModuleName
-    Configuration  = $Configuration
-    OutputPath     = $OutputPath
-    SourcePath     = $PSScriptRoot
-    ModulePath     = Join-Path $PSScriptRoot "$ModuleName.psm1"
-    ManifestPath   = Join-Path $PSScriptRoot "$ModuleName.psd1"
-    TestPath       = Join-Path $PSScriptRoot 'tests'
-    DocsPath       = Join-Path $PSScriptRoot 'docs'
-    PublicPath     = Join-Path $PSScriptRoot 'Public'
-    PrivatePath    = Join-Path $PSScriptRoot 'Private'
-    AnalyzerPath   = Join-Path $PSScriptRoot 'ScriptAnalyzerSettings.psd1'
+    ModuleName = $ModuleName
+    Configuration = $Configuration
+    OutputPath = $OutputPath
+    SourcePath = $PSScriptRoot
+    ModulePath = Join-Path $PSScriptRoot "$ModuleName.psm1"
+    ManifestPath = Join-Path $PSScriptRoot "$ModuleName.psd1"
+    TestPath = Join-Path $PSScriptRoot 'tests'
+    DocsPath = Join-Path $PSScriptRoot 'docs'
+    PublicPath = Join-Path $PSScriptRoot 'Public'
+    PrivatePath = Join-Path $PSScriptRoot 'Private'
+    AnalyzerPath = Join-Path $PSScriptRoot 'ScriptAnalyzerSettings.psd1'
 }
 # Helper functions
 function Write-BuildMessage {
@@ -92,7 +92,7 @@ function Install-RequiredModule {
     }
 }
 function Invoke-Clean {
-    Write-BuildMessage "=== CLEAN TASK ===" -Level Info
+    Write-BuildMessage " === = CLEAN TASK === = " -Level Info
     Write-BuildMessage "Cleaning output directory: $($BuildVariables.OutputPath)"
     if (Test-Path $BuildVariables.OutputPath) {
         Remove-Item $BuildVariables.OutputPath -Recurse -Force
@@ -102,7 +102,7 @@ function Invoke-Clean {
     Write-BuildMessage "Created clean output directory" -Level Success
 }
 function Invoke-Analyze {
-    Write-BuildMessage "=== ANALYZE TASK ===" -Level Info
+    Write-BuildMessage " === = ANALYZE TASK === = " -Level Info
     Write-BuildMessage "Running PSScriptAnalyzer..."
     $analyzerResults = @()
     $filesToAnalyze = @()
@@ -152,7 +152,7 @@ function Invoke-Analyze {
     }
 }
 function Invoke-Test {
-    Write-BuildMessage "=== TEST TASK ===" -Level Info
+    Write-BuildMessage " === = TEST TASK === = " -Level Info
     if (-not (Test-Path $BuildVariables.TestPath)) {
         Write-BuildMessage "Test directory not found: $($BuildVariables.TestPath)" -Level Warning
         Write-BuildMessage "Skipping tests" -Level Warning
@@ -194,7 +194,7 @@ function Invoke-Test {
     Write-BuildMessage "All tests passed successfully!" -Level Success
 }
 function Invoke-Build {
-    Write-BuildMessage "=== BUILD TASK ===" -Level Info
+    Write-BuildMessage " === = BUILD TASK === = " -Level Info
     Write-BuildMessage "Building module package..."
     $moduleOutputPath = Join-Path $BuildVariables.OutputPath $BuildVariables.ModuleName
     if (Test-Path $moduleOutputPath) {
@@ -239,7 +239,7 @@ function Invoke-Build {
     }
 }
 function Invoke-Publish {
-    Write-BuildMessage "=== PUBLISH TASK ===" -Level Info
+    Write-BuildMessage " === = PUBLISH TASK === = " -Level Info
     $moduleOutputPath = Join-Path $BuildVariables.OutputPath $BuildVariables.ModuleName
     if (-not (Test-Path $moduleOutputPath)) {
         Write-BuildMessage "Module package not found. Run Build task first." -Level Error

@@ -29,14 +29,14 @@ function Connect-Rapt {
     Begin {
         $uri = 'https://id.rapt.io/connect/token'
         $header = @{
-            'Content-Type'    = 'application/x-www-form-urlencoded'
+            'Content-Type' = 'application/x-www-form-urlencoded'
             'Accept-Encoding' = 'gzip, deflate, br'
         }
         $body = @{
-            client_id  = 'rapt-user'
+            client_id = 'rapt-user'
             grant_type = 'password'
-            username   = $username
-            password   = $apiKey
+            username = $username
+            password = $apiKey
         }
     }
     Process {
@@ -50,14 +50,14 @@ function Connect-Rapt {
         # Defining Script variables to recycle in other functions
         $Script:raptObj = [psCustomObject]@{
             accessToken = $response.access_token
-            expiresIn   = $response.expires_in
-            expireTime  = (Get-Date).AddSeconds($response.expires_in)
-            tokenType   = $response.token_type
-            scope       = $response.scope
-            username    = $username
-            apiKey      = $apiKey
-            baseUri     = 'https://api.rapt.io'
-            authUri     = 'https://id.rapt.io'
+            expiresIn = $response.expires_in
+            expireTime = (Get-Date).AddSeconds($response.expires_in)
+            tokenType = $response.token_type
+            scope = $response.scope
+            username = $username
+            apiKey = $apiKey
+            baseUri = 'https://api.rapt.io'
+            authUri = 'https://id.rapt.io'
         }
         return $raptObj
     }

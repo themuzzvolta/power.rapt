@@ -24,29 +24,29 @@ function Set-TemperatureControllerPIDEnabled {
     #>
     [CmdletBinding(SupportsShouldProcess)][OutputType('System.Management.Automation.PSObject')]
     Param (
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]$Id,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]$Name,
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [bool]$State
     )
     Begin {
         # Check if connection to RAPT portal exists
-        If(-not $raptObj){
+        If (-not $raptObj) {
             throw "Please connect to the RAPT.io portal using the Connect-Rapt cmdlet"
         }
         $uri = "$($raptObj.baseUri)/api/TemperatureControllers/SetPIDEnabled"
         # Check time left on token; if less than 2 minutes, refresh it.
         $timeLeft = New-TimeSpan $(Get-Date) $raptObj.expireTime
-        If($timeLeft.Minutes -lt 2 -and $raptObj){
+        If ($timeLeft.Minutes -LT 2 -and $raptObj) {
             Connect-Rapt -username $raptObj.username -apiKey $raptObj.apiKey
         }
         # If no token passed, use the scoped variable
-        If(!$token){
+        If (!$token) {
             $token = $raptObj.accessToken
         }
         $header = @{
@@ -55,7 +55,7 @@ function Set-TemperatureControllerPIDEnabled {
             'Authorization' = "Bearer ${token}"
         }
         If ($PSBoundParameters.ContainsKey('Name')){
-            $Id = (Get-TemperatureController | Where-Object {$_.Name -eq $Name}).Id
+            $Id = (Get-TemperatureController | Where-Object {$_.Name -EQ $Name}).Id
         }
         $body = @{
             temperatureControllerId = $Id
@@ -66,10 +66,10 @@ function Set-TemperatureControllerPIDEnabled {
         if ($PSCmdlet.ShouldProcess($Id, "Modify device settings")) {
                 try {
                     $params = @{
-                    uri     = $uri
+                    uri = $uri
                     headers = $header
-                    body    = $body
-                    method  = 'POST'
+                    body = $body
+                    method = 'POST'
             }
             $response = Invoke-RestMethod @params
         }

@@ -18,7 +18,7 @@ function ConvertTo-RaptApiUri {
     .EXAMPLE
         ConvertTo-RaptApiUri -Endpoint 'Devices/BrewZilla' -DeviceId '12345'
     .EXAMPLE
-        ConvertTo-RaptApiUri -Endpoint 'Telemetry' -QueryParameters @{startDate='2024-01-01'; endDate='2024-01-02'}
+        ConvertTo-RaptApiUri -Endpoint 'Telemetry' -QueryParameters @{startDate = '2024-01-01'; endDate = '2024-01-02'}
     #>
     [CmdletBinding()]
     param(
@@ -45,21 +45,21 @@ function ConvertTo-RaptApiUri {
     }
     $uriBuilder.Path = "$($uriBuilder.Path.TrimEnd('/'))/$path"
     # Add query parameters
-    if ($QueryParameters -and $QueryParameters.Count -gt 0) {
+    if ($QueryParameters -and $QueryParameters.Count -GT 0) {
         $queryString = @()
         foreach ($key in $QueryParameters.Keys) {
             $value = $QueryParameters[$key]
-            if ($null -ne $value) {
+            if ($null -NE $value) {
                 $encodedKey = [System.Web.HttpUtility]::UrlEncode($key)
                 $encodedValue = [System.Web.HttpUtility]::UrlEncode($value.ToString())
-                $queryString += "$encodedKey=$encodedValue"
+                $queryString + = "$encodedKey = $encodedValue"
             }
         }
-        if ($queryString.Count -gt 0) {
+        if ($queryString.Count -GT 0) {
             $uriBuilder.Query = $queryString -join '&'
         }
     }
     $finalUri = $uriBuilder.Uri.ToString()
-    Write-RaptLog -Message "Constructed API URI: $finalUri" -Level Debug
+    Write-RaptLog -Message "Constructed API URI: $finalUri" -LE vel Debug
     return $finalUri
 }

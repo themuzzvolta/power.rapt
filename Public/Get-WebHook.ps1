@@ -16,17 +16,17 @@ function Get-WebHook {
     )
     Begin {
         # Check if connection to RAPT portal exists
-        If(-not $raptObj){
+        If (-not $raptObj) {
             throw "Please connect to the RAPT.io portal using the Connect-Rapt cmdlet"
         }
         $uri = "$($raptObj.baseUri)/api/WebHooks/GetAll"
         # Check time left on token; if less than 2 minutes, refresh it.
         $timeLeft = New-TimeSpan $(Get-Date) $raptObj.expireTime
-        If($timeLeft.Minutes -lt 2 -and $raptObj){
+        If ($timeLeft.Minutes -LT 2 -and $raptObj) {
             Connect-Rapt -username $raptObj.username -apiKey $raptObj.apiKey
         }
         # If no token passed, use the scoped variable
-        If(!$token){
+        If (!$token) {
             $token = $raptObj.accessToken
         }
         $header = @{
@@ -43,10 +43,10 @@ function Get-WebHook {
     Process {
         try {
             $params = @{
-                    uri     = $uri
+                    uri = $uri
                     headers = $header
-                    method  = 'GET'
-                    body    = $body
+                    method = 'GET'
+                    body = $body
             }
             $response = Invoke-RestMethod @params
         }

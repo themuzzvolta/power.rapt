@@ -33,7 +33,7 @@ function Get-CanFiller {
         }
         # Check time left on token; if less than 2 minutes, refresh it.
         $timeLeft = New-TimeSpan $(Get-Date) $raptObj.expireTime
-        If ($timeLeft.Minutes -lt 2 -and $raptObj) {
+        If ($timeLeft.Minutes -LT 2 -and $raptObj) {
             Connect-Rapt -username $raptObj.username -apiKey $raptObj.apiKey
         }
         # If no token passed, use the scoped variable
@@ -41,9 +41,9 @@ function Get-CanFiller {
             $token = $raptObj.accessToken
         }
         $header = @{
-            'Accept'          = 'application/json'
+            'Accept' = 'application/json'
             'Accept-Encoding' = 'gzip, deflate, br'
-            'Authorization'   = "Bearer ${token}"
+            'Authorization' = "Bearer ${token}"
         }
         If ($PSBoundParameters.ContainsKey('Id')) {
             $body = @{
@@ -54,9 +54,9 @@ function Get-CanFiller {
     Process {
         try {
             $params = @{
-                uri     = $uri
+                uri = $uri
                 headers = $header
-                method  = 'GET'
+                method = 'GET'
             }
             If ($PSBoundParameters.ContainsKey('Id')) {
                 $params.body = $body
