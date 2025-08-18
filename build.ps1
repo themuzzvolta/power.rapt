@@ -39,17 +39,17 @@ param(
 )
 # Set build variables
 $BuildVariables = @{
-    ModuleName = $ModuleName
+    ModuleName    = $ModuleName
     Configuration = $Configuration
-    OutputPath = $OutputPath
-    SourcePath = $PSScriptRoot
-    ModulePath = Join-Path $PSScriptRoot "$ModuleName.psm1"
-    ManifestPath = Join-Path $PSScriptRoot "$ModuleName.psd1"
-    TestPath = Join-Path $PSScriptRoot 'tests'
-    DocsPath = Join-Path $PSScriptRoot 'docs'
-    PublicPath = Join-Path $PSScriptRoot 'Public'
-    PrivatePath = Join-Path $PSScriptRoot 'Private'
-    AnalyzerPath = Join-Path $PSScriptRoot 'ScriptAnalyzerSettings.psd1'
+    OutputPath    = $OutputPath
+    SourcePath    = $PSScriptRoot
+    ModulePath    = Join-Path $PSScriptRoot "$ModuleName.psm1"
+    ManifestPath  = Join-Path $PSScriptRoot "$ModuleName.psd1"
+    TestPath      = Join-Path $PSScriptRoot 'tests'
+    DocsPath      = Join-Path $PSScriptRoot 'docs'
+    PublicPath    = Join-Path $PSScriptRoot 'Public'
+    PrivatePath   = Join-Path $PSScriptRoot 'Private'
+    AnalyzerPath  = Join-Path $PSScriptRoot 'ScriptAnalyzerSettings.psd1'
 }
 # Helper functions
 function Write-BuildMessage {
@@ -129,9 +129,9 @@ function Invoke-Analyze {
         }
     }
     if ($analyzerResults) {
-        $errorCount = ($analyzerResults | Where-Object Severity -eq 'Error').Count
-        $warningCount = ($analyzerResults | Where-Object Severity -eq 'Warning').Count
-        $infoCount = ($analyzerResults | Where-Object Severity -eq 'Information').Count
+        $errorCount = ($analyzerResults | Where-Object Severity -EQ 'Error').Count
+        $warningCount = ($analyzerResults | Where-Object Severity -EQ 'Warning').Count
+        $infoCount = ($analyzerResults | Where-Object Severity -EQ 'Information').Count
         Write-BuildMessage "PSScriptAnalyzer Results:" -Level Info
         Write-BuildMessage "  Errors: $errorCount" -Level $(if ($errorCount -gt 0) { 'Error' } else { 'Info' })
         Write-BuildMessage "  Warnings: $warningCount" -Level $(if ($warningCount -gt 0) { 'Warning' } else { 'Info' })
@@ -175,11 +175,11 @@ function Invoke-Test {
     $testOutputFile = Join-Path $BuildVariables.OutputPath 'TestResults.xml'
     # Run Pester tests with proper configuration
     $pesterConfig = @{
-        Path = $BuildVariables.TestPath
+        Path         = $BuildVariables.TestPath
         OutputFormat = 'NUnitXml'
-        OutputFile = $testOutputFile
-        PassThru = $true
-        Verbose = $false
+        OutputFile   = $testOutputFile
+        PassThru     = $true
+        Verbose      = $false
     }
     $testResults = Invoke-Pester @pesterConfig
     Write-BuildMessage "Test Results:" -Level Info
