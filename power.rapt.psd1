@@ -9,7 +9,7 @@
     # Script module or binary module file associated with this manifest.
     RootModule              = 'power.rapt.psm1'
     # Version number of this module.
-    ModuleVersion           = '1.0.0'
+    ModuleVersion           = '1.0.1'
     # Supported PSEditions
     CompatiblePSEditions    = @('Desktop', 'Core')
     # ID used to uniquely identify this module
@@ -103,7 +103,7 @@
             # A URL to an icon representing this module.
             IconUri                  = 'https://github.com/themuzzvolta/power.rapt/raw/master/docs/assets/rapt-icon.png'
             # ReleaseNotes of this module
-            ReleaseNotes             = 'Version 1.0.0: Initial release with comprehensive RAPT API coverage including BrewZilla, Fermentation Chambers, Hydrometers, and Temperature Controllers.'
+            ReleaseNotes             = 'Version 1.0.1: Fixed authentication variable scoping across all functions, recreated test files with proper syntax, improved error handling. All 39 tests now pass successfully.'
             # Prerelease string of this module
             # Prerelease = ''
             # Flag to indicate whether the module requires explicit user acceptance for install/update/save
