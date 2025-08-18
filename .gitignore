@@ -1,0 +1,63 @@
+# PowerShell Module Build Artifacts
+Output/
+*.nupkg
+*.zip
+
+# PowerShell Gallery Packages
+packages/
+
+# Build Tools
+.psake/
+.vscode/settings.json
+
+# Logs
+*.log
+logs/
+
+# Temporary Files
+temp/
+tmp/
+*~
+
+# PowerShell Specific
+*.ps1xml.bak
+*.psd1.bak
+*.psm1.bak
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+TestResults/
+coverage.xml
+*.coverage
+
+# Documentation Build
+site/
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Personal Notes
+notes.md
+TODO.md
+scratch/
+
+# API Keys and Secrets
+*.key
+secrets.json
+config.local.json

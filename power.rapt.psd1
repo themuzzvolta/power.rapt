@@ -12,10 +12,10 @@
     RootModule = 'power.rapt.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.1.0'
+    ModuleVersion = '1.0.0'
 
     # Supported PSEditions
-    # CompatiblePSEditions = @()
+    CompatiblePSEditions = @('Desktop', 'Core')
 
     # ID used to uniquely identify this module
     GUID = '1c3ba4b7-f437-4eea-b966-4acea76be2e8'
@@ -24,16 +24,16 @@
     Author = 'Kurt Murray'
 
     # Company or vendor of this module
-    CompanyName = 'Unknown'
+    CompanyName = 'Murray Technologies'
 
     # Copyright statement for this module
-    # Copyright = ''
+    Copyright = '(c) 2024 Kurt Murray. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description = 'PowerShell module to help automate your brewing experience with via RAPT (Really Awesome Product Technology)'
+    Description = 'PowerShell module for automating RAPT (Really Awesome Product Technology) brewing devices including BrewZilla, Fermentation Chambers, Hydrometers, and Temperature Controllers.'
 
     # Minimum version of the PowerShell engine required by this module
-    # PowerShellVersion = ''
+    PowerShellVersion = '5.1'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -42,7 +42,7 @@
     # PowerShellHostVersion = ''
 
     # Minimum version of Microsoft .NET Framework required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
-    # DotNetFrameworkVersion = ''
+    DotNetFrameworkVersion = '4.7.2'
 
     # Minimum version of the common language runtime (CLR) required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
     # ClrVersion = ''
@@ -69,16 +69,47 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = '*'
+    FunctionsToExport = @(
+        'Connect-Rapt',
+        'Get-BrewZilla',
+        'Get-BrewZillaTelemetry',
+        'Get-CanFiller',
+        'Get-CanFillerTelemetry',
+        'Get-ExternalDevice',
+        'Get-ExternalDeviceTelemetry',
+        'Get-FermentationChamber',
+        'Get-FermentationChamberTelemetry',
+        'Get-Hydrometer',
+        'Get-HydrometerTelemetry',
+        'Get-Profile',
+        'Get-ProfileType',
+        'Get-TemperatureController',
+        'Get-TemperatureControllerTelemetery',
+        'Get-UserInfo',
+        'Get-WebHooks',
+        'Set-BrewZillaHeatingEnabled',
+        'Set-BrewZillaHeatingUtilisation',
+        'Set-BrewZillaPID',
+        'Set-BrewZillaPIDEnabled',
+        'Set-BrewZillaPumpEnabled',
+        'Set-BrewZillaPumpUtilisation',
+        'Set-BrewZillaTemp',
+        'Set-FermentationChamberPID',
+        'Set-FermentationChamberPIDEnabled',
+        'Set-FermentationChamberTemp',
+        'Set-TemperatureControllerPID',
+        'Set-TemperatureControllerPIDEnabled',
+        'Set-TemperatureControllerTemp'
+    )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport = '*'
+    CmdletsToExport = @()
 
     # Variables to export from this module
-    VariablesToExport = '*'
+    VariablesToExport = @()
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport = '*'
+    AliasesToExport = @()
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()
@@ -95,25 +126,25 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            # Tags = @()
+            Tags = @('RAPT', 'Brewing', 'BrewZilla', 'Fermentation', 'Automation', 'IoT', 'API', 'Beer', 'Homebrewing')
 
             # A URL to the license for this module.
-            # LicenseUri = ''
+            LicenseUri = 'https://github.com/themuzzvolta/power.rapt/blob/master/LICENSE'
 
             # A URL to the main website for this project.
-            # ProjectUri = ''
+            ProjectUri = 'https://github.com/themuzzvolta/power.rapt'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri = 'https://github.com/themuzzvolta/power.rapt/raw/master/docs/assets/rapt-icon.png'
 
             # ReleaseNotes of this module
-            # ReleaseNotes = ''
+            ReleaseNotes = 'Version 1.0.0: Initial release with comprehensive RAPT API coverage including BrewZilla, Fermentation Chambers, Hydrometers, and Temperature Controllers.'
 
             # Prerelease string of this module
             # Prerelease = ''
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update/save
-            # RequireLicenseAcceptance = $false
+            RequireLicenseAcceptance = $false
 
             # External dependent modules of this module
             # ExternalModuleDependencies = @()
@@ -123,7 +154,7 @@
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    # HelpInfoURI = ''
+    HelpInfoURI = 'https://github.com/themuzzvolta/power.rapt/blob/master/docs/README.md'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
