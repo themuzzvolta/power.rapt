@@ -1,5 +1,7 @@
 BeforeAll {
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]`n        # # $ModuleRoot = Split-Path $PSScriptRoot -Parent  # TODO: Update tests  # TODO: Update tests
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]
+    param()
+    $ModuleRoot = Split-Path $PSScriptRoot -Parent
     $ModuleName = 'power.rapt'
     $ManifestPath = Join-Path $ModuleRoot "$ModuleName.psd1"
     if (Get-Module $ModuleName) {
@@ -10,10 +12,12 @@ BeforeAll {
 Describe 'Module Manifest Tests' -Tag 'Module' {
     Context 'Manifest Validation' {
         BeforeAll {
-            [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]`n        # # $ModuleRoot = Split-Path $PSScriptRoot -Parent  # TODO: Update tests  # TODO: Update tests
+            [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]
+            param()
+            $ModuleRoot = Split-Path $PSScriptRoot -Parent
             $ModuleName = 'power.rapt'
             $ManifestPath = Join-Path $ModuleRoot "$ModuleName.psd1"
-            [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]`n        # # $ManifestData = Test-ModuleManifest -Path $ManifestPath -ErrorAction SilentlyContinue -WarningAction SilentlyContinue  # TODO: Update tests  # TODO: Update tests
+            $ManifestData = Test-ModuleManifest -Path $ManifestPath -ErrorAction SilentlyContinue -WarningAction SilentlyContinue
         }
         It 'Should have a valid manifest' {
             $ManifestData | Should -Not -BeNullOrEmpty
@@ -43,6 +47,7 @@ Describe 'Module Manifest Tests' -Tag 'Module' {
     }
     Context 'Exported Functions' {
         BeforeAll {
+            $ExportedFunctions = Get-Command -Module 'power.rapt' -CommandType Function
         }
         It 'Should export functions' {
             $ExportedFunctions | Should -Not -BeNullOrEmpty
@@ -72,7 +77,10 @@ Describe 'Module Manifest Tests' -Tag 'Module' {
 }
 Describe 'Function Structure Tests' -Tag 'Function' {
     BeforeAll {
-        [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]`n        # # $ModuleRoot = Split-Path $PSScriptRoot -Parent  # TODO: Update tests  # TODO: Update tests
+        [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]
+        param()
+        $ModuleRoot = Split-Path $PSScriptRoot -Parent
+        $PublicFunctions = Get-ChildItem -Path "$ModuleRoot\Public" -Filter "*.ps1" -Recurse
     }
     Context 'Function Files' {
         It 'Should have public functions' {
@@ -88,7 +96,9 @@ Describe 'Function Structure Tests' -Tag 'Function' {
         foreach ($FunctionFile in $PublicFunctions) {
             Context "Function: $($FunctionFile.BaseName)" {
                 BeforeAll {
-                    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]`n        # # $FunctionContent = Get-Content -Path $FunctionFile.FullName -Raw  # TODO: Update tests  # TODO: Update tests
+                    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]
+                    param()
+                    $FunctionContent = Get-Content -Path $FunctionFile.FullName -Raw
                 }
                 It 'Should have a function definition' {
                     $FunctionContent | Should -Match 'function\s+\w+-\w+'
@@ -113,7 +123,9 @@ Describe 'Module Import Tests' -Tag 'Import' {
     Context 'Module Loading' {
         It 'Should import without errors' {
             {
-                [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]`n        # # $ModuleRoot = Split-Path $PSScriptRoot -Parent  # TODO: Update tests  # TODO: Update tests
+                [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]
+                param()
+                $ModuleRoot = Split-Path $PSScriptRoot -Parent
                 $ModuleName = 'power.rapt'
                 $ManifestPath = Join-Path $ModuleRoot "$ModuleName.psd1"
                 if (Get-Module $ModuleName) {

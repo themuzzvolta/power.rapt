@@ -23,23 +23,21 @@ function Get-BrewZilla {
     )
     Begin {
         # Check if connection to RAPT portal exists
-        If (-not $raptObj) {
+        If (-not (Get-Variable -Name raptObj -Scope Script -ErrorAction SilentlyContinue)) {
             throw "Please connect to the RAPT.io portal using the Connect-Rapt cmdlet"
         }
         If ($PSBoundParameters.ContainsKey('Id')) {
-            $uri = "$($raptObj.baseUri)/api/BrewZillas/GetBrewZilla"
+            $uri = "$($Script:raptObj.baseUri)/api/BrewZillas/GetBrewZilla"
         } else {
-            $uri = "$($raptObj.baseUri)/api/BrewZillas/GetBrewZillas"
+            $uri = "$($Script:raptObj.baseUri)/api/BrewZillas/GetBrewZillas"
         }
         # Check time left on token; if less than 2 minutes, refresh it.
-        $timeLeft = New-TimeSpan $(Get-Date) $raptObj.expireTime
-        If ($timeLeft.Minutes -LT 2 -and $raptObj) {
-            Connect-Rapt -username $raptObj.username -apiKey $raptObj.apiKey
+        $timeLeft = New-TimeSpan $(Get-Date) $Script:raptObj.expireTime
+        If ($timeLeft.Minutes -LT 2 -and $Script:raptObj) {
+            Connect-Rapt -username $Script:raptObj.username -apiKey $Script:raptObj.apiKey
         }
-        # If no token passed, use the scoped variable
-        If (!$token) {
-            $token = $raptObj.accessToken
-        }
+        # Use the script-scoped token
+        $token = $Script:raptObj.accessToken
         $header = @{
             'Accept' = 'application/json'
             'Accept-Encoding' = 'gzip, deflate, br'
@@ -71,3 +69,6 @@ function Get-BrewZilla {
     End {
     }
 }
+
+
+
